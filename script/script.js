@@ -1,11 +1,11 @@
-const url_categoria_economica = 'https://raw.githubusercontent.com/khrir/Dashboard/main/database/Despesas_CE.csv';
-const url_favorecido = 'https://raw.githubusercontent.com/khrir/Dashboard/main/database/despesas_PF.csv';
-const url_municipio = 'https://raw.githubusercontent.com/khrir/Dashboard/main/database/Repasses_M.csv';
+const url_categoria_economica = '../database/Despesas_CE.csv';
+const url_favorecido = '../database/DESPESAS_PF.CSV';
+const url_municipio = '../database/REPASSES_M.CSV';
 
 async function test(url){
     fetch(url).then(function(response){return response.text();
     }).then(function(data){ 
-        var table = document.getElementById('content');
+        var table = document.getElementById('content-local');
         convert(data, table);
     });
 

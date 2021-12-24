@@ -84,3 +84,28 @@ main{
 .menu ul li a:hover{
     color: #3b3b3b;
 }
+
+.container-local{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+table{
+    border-collapse: collapse;
+    border: 1px solid gray;
+    width: 100%;
+    max-width: 500px;
+    color: rgb(0, 0, 0);
+}
+
+table th, td{
+    padding: 1px 5px;
+    text-align: center;
+}
+
+table th{
+    background: rgba(0, 0, 0, 0.2);
+}
