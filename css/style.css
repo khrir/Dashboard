@@ -41,6 +41,8 @@ main{
     background:#f7f7f7;
     padding: 30px;
     width: 100%;
+    border: 2px solid red;
+    overflow-y: auto;
 }
 
 .logo{
@@ -85,14 +87,6 @@ main{
     color: #3b3b3b;
 }
 
-.container-local{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-}
-
 table{
     border-collapse: collapse;
     border: 1px solid gray;
@@ -108,4 +102,26 @@ table th, td{
 
 table th{
     background: rgba(0, 0, 0, 0.2);
+}
+
+.panel-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid blue;
+}
+
+.panel{
+    width: 48%;
+    background: rgb(104, 102, 104);
+    height: 100px;
+    font-size: 22px;
+    color: white;
+}
+
+.panel:hover{
+    transform: scale(1.05);
+    transition: .2s;
 }

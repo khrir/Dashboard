@@ -42,25 +42,6 @@ async function test(url){
     }
 }
 
-
-const xlabel = [];
-const ylabel = [];
-
-async function getDados(url){
-    let response = await fetch(url);
-    let data = await response.text();
-
-    let table = data.split('\n').slice(1);
-    table.forEach(row => {
-        let columns = row.split(',');
-        let custeio = columns[0];
-        let secretaria = columns[1];
-        xlabel.push(secretaria);
-        ylabel.push(parseFloat(custeio));
-        console.log(custeio, secretaria);
-    });
-}
-
 async function chartIt(url){
     await getDados(url);
 
@@ -84,4 +65,21 @@ async function chartIt(url){
 }
 
 
+// const xlabel = [];
+// const ylabel = [];
+
+// async function getDados(url){
+//     let response = await fetch(url);
+//     let data = await response.text();
+
+//     let table = data.split('\n').slice(1);
+//     table.forEach(row => {
+//         let columns = row.split(',');
+//         let custeio = columns[0];
+//         let secretaria = columns[1];
+//         xlabel.push(secretaria);
+//         ylabel.push(parseFloat(custeio));
+//         console.log(custeio, secretaria);
+//     });
+// }
 
