@@ -5,7 +5,7 @@ const url_municipio = '../database/REPASSES_M.CSV';
 async function test(url){
     fetch(url).then(function(response){return response.text();
     }).then(function(data){ 
-        var table = document.getElementById('content-local');
+        var table = document.getElementById('content');
         convert(data, table);
     });
 
@@ -65,21 +65,21 @@ async function chartIt(url){
 }
 
 
-// const xlabel = [];
-// const ylabel = [];
+const xlabel = [];
+const ylabel = [];
 
-// async function getDados(url){
-//     let response = await fetch(url);
-//     let data = await response.text();
+async function getDados(url){
+    let response = await fetch(url);
+    let data = await response.text();
 
-//     let table = data.split('\n').slice(1);
-//     table.forEach(row => {
-//         let columns = row.split(',');
-//         let custeio = columns[0];
-//         let secretaria = columns[1];
-//         xlabel.push(secretaria);
-//         ylabel.push(parseFloat(custeio));
-//         console.log(custeio, secretaria);
-//     });
-// }
+    let table = data.split('\n').slice(1);
+    table.forEach(row => {
+        let columns = row.split(',');
+        let custeio = columns[0];
+        let secretaria = columns[1];
+        xlabel.push(secretaria);
+        ylabel.push(parseFloat(custeio));
+        console.log(custeio, secretaria);
+    });
+}
 
