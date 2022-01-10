@@ -1,46 +1,6 @@
-const url_categoria_economica = '../database/Despesas_CE.csv';
-const url_favorecido = '../database/DESPESAS_PF.CSV';
-const url_municipio = '../database/REPASSES_M.CSV';
-
-async function test(url){
-    fetch(url).then(function(response){return response.text();
-    }).then(function(data){ 
-        var table = document.getElementById('content');
-        convert(data, table);
-    });
-
-    function convert(csv, element) {
-        var rows = csv.trim().split(/\r?\n|\r/); // Regex to split/separate the CSV rows
-        var table = '';
-        var table_rows = '';
-        var table_header = '';
-    
-        rows.forEach(function(row, row_index) {
-            let table_col = '';
-            let columns = row.split(','); // split/separate the columns in a row
-
-            columns.forEach(column => {
-                table_col += row_index == 0 ? '<th>' + column + '</th>' : '<td>' + column + '</td>';
-            });
-            if (row_index == 0) {
-                table_header += '<tr>' + table_col + '</tr>';
-            } else {
-                table_rows += '<tr>' + table_col + '</tr>';
-            }
-        });
-    
-        table += '<table>';
-            table += '<thead>';
-                table += table_header;
-            table += '</thead>';
-            table += '<tbody>';
-                table += table_rows;
-            table += '</tbody>';
-        table += '</table>';
-    
-        element.innerHTML += table;
-    }
-}
+const url_categoria_economica = 'https://raw.githubusercontent.com/khrir/Dashboard/main/database/Despesas_CE.csv';
+const url_favorecido = 'https://raw.githubusercontent.com/khrir/Dashboard/main/database/DESPESAS_PF.CSV';
+const url_municipio = 'https://raw.githubusercontent.com/khrir/Dashboard/main/database/REPASSES_M.CSV';
 
 async function chartIt(url){
     await getDados(url);
@@ -83,3 +43,26 @@ async function getDados(url){
     });
 }
 
+var content = document.getElementById('content');
+
+function arrayToTable(tableData) {
+    var table = $('<table></table>');
+    $(tableData).each(function (i, rowData) {
+        var row = $('<tr></tr>');
+        $(rowData).each(function (j, cellData) {
+            row.append($('<td>'+cellData+'</td>'));
+        });
+        table.append(row);
+    });
+    return table;
+}
+
+function test(url){
+    $.ajax({
+        type: "GET",
+        url: url,
+        success: function (data) {
+            $(content).append(arrayToTable(Papa.parse(data).data));
+        }
+    });
+}
