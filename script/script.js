@@ -4,6 +4,8 @@ const url_municipio = 'https://raw.githubusercontent.com/khrir/Dashboard/main/da
 
 async function chartIt(url){
     await getDados(url);
+    var canvas = '<canvas id="myChart"></canvas>';
+    $('#content').html(canvas);
 
     const ctx = document.getElementById('myChart');
     const myChart = new Chart(ctx, {
@@ -21,7 +23,8 @@ async function chartIt(url){
         options: {
             responsive: true,
         }
-    })
+    });
+    
 }
 
 
@@ -39,30 +42,31 @@ async function getDados(url){
         let secretaria = columns[1];
         xlabel.push(secretaria);
         ylabel.push(parseFloat(custeio));
-        console.log(custeio, secretaria);
     });
-}
-
-var content = document.getElementById('content');
-
-function arrayToTable(tableData) {
-    var table = $('<table></table>');
-    $(tableData).each(function (i, rowData) {
-        var row = $('<tr></tr>');
-        $(rowData).each(function (j, cellData) {
-            row.append($('<td>'+cellData+'</td>'));
-        });
-        table.append(row);
-    });
-    return table;
 }
 
 function test(url){
-    $.ajax({
-        type: "GET",
+    $.ajax({       
         url: url,
-        success: function (data) {
-            $(content).append(arrayToTable(Papa.parse(data).data));
+        dataType: "text",
+        success: function(data){
+            var intermedio = data.split(/\r?\n|\r/);
+            var table_data = '<table class="tabela">';
+            for(let i = 0; i < intermedio.length; i++){
+                var cell = intermedio[i].split(",");
+                table_data += '<tr>';
+                for(let j = 0; j < cell.length; j++){
+                    if(i === 0){
+                        table_data += '<th>'+cell[j]+'</th>';
+                    }
+                    else{
+                        table_data += '<td>'+ cell[j] +'</td>';
+                    }
+                }
+                table_data += '</tr>';
+            }
+            table_data += '</table>';
+            $('#content').html(table_data)
         }
     });
 }
