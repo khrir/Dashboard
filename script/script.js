@@ -51,7 +51,7 @@ function test(url){
         dataType: "text",
         success: function(data){
             var intermedio = data.split(/\r?\n|\r/);
-            var table_data = '<table class="tabela">';
+            var table_data = '<table class="table table-bordered table-striped">';
             for(let i = 0; i < intermedio.length; i++){
                 var cell = intermedio[i].split(",");
                 table_data += '<tr>';
