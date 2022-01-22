@@ -1,11 +1,20 @@
-const url_categoria_economica = 'https://raw.githubusercontent.com/khrir/Dashboard/main/database/Despesas_CE.csv';
-const url_favorecido = 'https://raw.githubusercontent.com/khrir/Dashboard/main/database/DESPESAS_PF.CSV';
-const url_municipio = 'https://raw.githubusercontent.com/khrir/Dashboard/main/database/REPASSES_M.CSV';
+const url_categoria_economica = '../database/Despesas_CE.csv';
+const url_f_completo = '../database/despesas_PF.csv';
+const url_m_completo = 'https://raw.githubusercontent.com/khrir/Dashboard/main/database/Repasses_M.csv'
 
-async function chartIt(url){
-    await getDados(url);
+// Graph zone
+const xlabel = [];
+const ylabel = [];
+
+async function chartIt(url) {
+    await getDataGraph(url);
     var canvas = '<canvas id="myChart"></canvas>';
     $('#content').html(canvas);
+
+    // Fazer uma verificação de existência da tag canvas
+    // else{
+    //      var canvas = '<canvas id="myChart"></canvas>'; $('#content').html(canvas)
+    // }
 
     const ctx = document.getElementById('myChart');
     const myChart = new Chart(ctx, {
@@ -24,17 +33,12 @@ async function chartIt(url){
             responsive: true,
         }
     });
-    
 }
 
-
-const xlabel = [];
-const ylabel = [];
-
-async function getDados(url){
+async function getDataGraph(url) {
     let response = await fetch(url);
     let data = await response.text();
-
+    console.log(data)
     let table = data.split('\n').slice(1);
     table.forEach(row => {
         let columns = row.split(',');
@@ -45,28 +49,43 @@ async function getDados(url){
     });
 }
 
-function test(url){
-    $.ajax({       
-        url: url,
-        dataType: "text",
-        success: function(data){
-            var intermedio = data.split(/\r?\n|\r/);
-            var table_data = '<table class="table table-bordered table-striped">';
-            for(let i = 0; i < intermedio.length; i++){
-                var cell = intermedio[i].split(",");
-                table_data += '<tr>';
-                for(let j = 0; j < cell.length; j++){
-                    if(i === 0){
-                        table_data += '<th>'+cell[j]+'</th>';
-                    }
-                    else{
-                        table_data += '<td>'+ cell[j] +'</td>';
-                    }
-                }
-                table_data += '</tr>';
-            }
-            table_data += '</table>';
-            $('#content').html(table_data)
-        }
+
+// Tables zone
+function plot_Table(url) {
+    let table = $('<table class="table">');
+    let header = "<tr>";
+    for (let k in url[0]) header += "<th>" + k + "</th>";
+    header += "</tr>";
+
+    $(header).appendTo(table);
+    $.each(url, function (_, value) {
+        let row = "<tr>";
+        $.each(value, function (_, val) {
+            row += "<td>" + val + "</td>";
+        });
+        row += "</tr>";
+        $(table).append(row);
     });
+    $('#content').html(table)
+}
+
+async function dataTable(url) {
+    let response = await fetch(url);
+    let data = await response.text();
+    let temporario = [];
+    let temp = {};
+    let array = data.split('\n').slice(1);
+
+    array.forEach(row => {
+        let col = row.split(',');
+        temp = { Cod: col[0], Valor: parseFloat(col[1]), Nome: col[2] }
+        temporario.push(temp);
+    });
+
+    temporario.sort((a, b) => {
+        return a.Valor < b.Valor;
+    });
+
+    tabela_url = temporario.slice(0, 10);
+    plot_Table(tabela_url);
 }

@@ -14,7 +14,7 @@ html, body{
     width: 100%;
 }
 
-sidebar{
+.sidebar{
     display: block;
     height: 100%;
     width: 300px;
@@ -45,6 +45,23 @@ main{
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.content::-webkit-scrollbar-track{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    background: #f5f5f5;
+}
+
+.content::-webkit-scrollbar{
+    width: 8px;
+    background: #f5f5f5;
+}
+
+.content::-webkit-scrollbar-thumb{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    background: #000000;
 }
 
 .logo{
@@ -89,18 +106,18 @@ main{
     color: #3b3b3b;
 }
 
-.header a{
+.header .fa-bars{
     color: #72777a;
-    text-transform: uppercase;
+    font-size: 22px;
+    cursor: pointer;
 }
 
-.header a:hover{
+.header .fa-bars:hover{
     color: #3b3b3b;
 }
 
 table{
     width: 100%;
-    min-width: 350px;
     border-collapse: collapse;
 }
 
@@ -118,4 +135,56 @@ th{
 
 tbody tr:nth-child(even){
     background: #f5f5f5;
+}
+
+@media screen and (max-width: 768px) {
+    .sidebar{
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 2;
+        transition: all .2s;
+    }
+
+    .header{
+        justify-content: flex-end;
+    }
+
+    main{
+        display: block;
+        height: 100%;
+        width: 100%;
+        z-index: 1;
+        position: relative;
+    }
+
+    /* th{
+        display:  none;
+    }
+
+    tr{
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 5px;
+    }
+
+    td{
+        width: 50%;
+    } */
+    /* black mode */
+}
+
+@media screen and (max-width: 380px) {
+    .sidebar{
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 2;
+        transition: all .2s;
+        width: 250px;
+    }
+
+    .header{
+        justify-content: flex-end;
+    }
 }
