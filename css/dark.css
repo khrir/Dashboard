@@ -1,0 +1,85 @@
+:root {
+    --darkColor: #141d27;
+    --darkColor2: #192734;
+    --darkColor3: #17222c;
+    --textColor: rgb(231, 231, 231);
+}
+
+/* DARK MODE */
+body.dark {
+    background-color: var(--darkColor);
+    color: var(--textColor);
+}
+
+body.dark .content{
+    background: var(--darkColor3);
+}
+
+body.dark .fas, body.dark .link{
+    color: var(--textColor);
+}
+
+body.dark .fas:hover, body.dark .link:hover{
+    color: rgb(179, 179, 179);
+}
+
+body.dark #myChart{
+    color: var(--textColor);
+}
+
+body.dark th{
+    background: none;
+}
+
+/* DARK MODE CHECKBOX */
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    visibility: hidden;
+    display: none;
+}
+
+.check {
+    position: relative;
+    display: block;
+    margin: 0 .2rem;
+    width: 40px;
+    height: 20px;
+    background: #ddd;
+    cursor: pointer;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: ease-in 0.5s;
+}
+
+.check:before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    background: var(--darkColor3);
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    transition: 0.5s;
+}
+
+input[type="checkbox"]:checked~.check:before {
+    transform: translateX(-50px);
+}
+
+.check:after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: #fff;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    transition: 0.5s;
+    transform: translateX(50px);
+}
+
+input[type="checkbox"]:checked~.check:after {
+    transform: translateX(0px);
+}

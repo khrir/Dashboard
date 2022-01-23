@@ -20,9 +20,10 @@ function reconfigurar() {
 }
 
 // DARK MODE
-const switch_theme = document.getElementById('switch__track');
+document.getElementById('mode').addEventListener("click", (e) => {
+    document.querySelector('body').classList.toggle('dark');
+});
 
-switch_theme.addEventListener('click', () => {
-        switch_theme.classList.toggle('dark');
-
+document.getElementById('mobile').addEventListener('click', (e) => {
+    document.querySelector('body').classList.toggle('dark');
 });

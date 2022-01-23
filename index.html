@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="br" data-theme="light">
+<html lang="br">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/dark.css">
         <link rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
             integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="crossorigin="anonymous"
@@ -20,23 +21,34 @@
             <div class="menu">
                 <ul>
                     <li>
-                        <i class="fas fa-home"></i>
-                        <a href="index.html">Home</a>
+                        <i class="fas fa-home op"></i>
+                        <a href="index.html" class="link">Home</a>
                     </li>
                     <li>
-                        <i class="fas fa-chart-bar"></i>
-                        <a href="#" onclick="chartIt(url_categoria_economica)">Despesas
+                        <i class="fas fa-chart-bar op"></i>
+                        <a href="#" class="link"
+                            onclick="chartIt(url_categoria_economica)">Despesas
                             por categoria econômica</a>
                     </li>
                     <li>
-                        <i class="fas fa-users"></i>
-                        <a href="#" onclick="dataTable(url_f_completo)">Despesas por
+                        <i class="fas fa-users op"></i>
+                        <a href="#" class="link"
+                            onclick="dataTable(url_f_completo)">Despesas por
                             favorecido</a>
                     </li>
                     <li>
-                        <i class="fas fa-city"></i>
-                        <a href="#" onclick="dataTable(url_m_completo)">Repasses por
+                        <i class="fas fa-city op"></i>
+                        <a href="#" class="link"
+                            onclick="dataTable(url_m_completo)">Repasses por
                             município</a>
+                    </li>
+                    <li class="switch-cont">
+                        <i class="fas fa-sun"></i>
+                        <label class="switch-mobile">
+                            <input type="checkbox" name="mobile" id="mobile">
+                            <span class="check"></span>
+                        </label>
+                        <i class="fas fa-moon"></i>
                     </li>
                 </ul>
             </div>
@@ -44,10 +56,12 @@
         <main id="main-content">
             <header class="header">
                 <i id="iconMenu" class="fas fa-bars" onclick="reconfigurar()"></i>
-
                 <div class="switch">
                     <i class="fas fa-sun"></i>
-                    <span class="switch__track" id="switch__track"></span>
+                    <label>
+                        <input type="checkbox" name="mode" id="mode">
+                        <span class="check"></span>
+                    </label>
                     <i class="fas fa-moon"></i>
                 </div>
             </header>

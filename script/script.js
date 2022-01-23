@@ -8,19 +8,24 @@ const ylabel = [];
 
 async function chartIt(url) {
     await dataGraph(url);
-    var canvas = '<canvas id="myChart"></canvas>';
-    $('#content').html(canvas);
 
-    // Fazer uma verificação de existência da tag canvas
-    // else{
-    //      var canvas = '<canvas id="myChart"></canvas>'; $('#content').html(canvas)
-    // }
+    let temp = {}
+    let axis = [];
+    let lab = [];
+    for (let i = 1; i < 20; i++) {
+        temp = { Id: i, Nome: xlabel[i] };
+        axis.push(temp);
+        lab.push(i);
+    }
+
+    let canvas = '<canvas id="myChart"></canvas>';
+    $('#content').html(canvas);
 
     const ctx = document.getElementById('myChart');
     const myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: xlabel,
+            labels: lab,
             datasets: [{
                 label: 'Valor',
                 data: ylabel,
@@ -31,9 +36,28 @@ async function chartIt(url) {
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true,
+
+                }
+            },
         }
     });
 }
+
+window.addEventListener('beforeprint', () => {
+    myChart.resize(600, 600);
+});
+window.addEventListener('afterprint', () => {
+    myChart.resize();
+});
 
 async function dataGraph(url) {
     let response = await fetch(url);
@@ -49,32 +73,30 @@ async function dataGraph(url) {
         temporario.push(temp);
     });
 
-    let result = temporario.map((obj) => findInObject(obj, 'SECRETARIA'));
+    let result = temporario.map((obj) => findInObject(obj, 'SEC'));
     let selected = result.map((obj, i) => Object.keys(obj).length ? temporario[i] : {}).filter((obj) => Object.keys(obj).length)
-    
-    for(let i = 0; i < selected.length; i++){
+
+    for (let i = 0; i < selected.length; i++) {
         ylabel.push(selected[i].Custeio);
         xlabel.push(selected[i].Nome);
-
     }
 }
-
 
 function findInObject(obj, str) {
     let result = JSON.parse(JSON.stringify(obj));
     const re = new RegExp(str, "gi");
 
-    Object.keys(result).map(function (key,_) {
-        if(typeof (result[key]) === "string" && result[key].match(re)) {
+    Object.keys(result).map(function (key, _) {
+        if (typeof (result[key]) === "string" && result[key].match(re)) {
             result[key] = true;
-        } 
-        else if(result[key] != undefined && result[key] != null && typeof (result[key]) === "object" && Object.keys(result[key]).length != 0) {
+        }
+        else if (result[key] != undefined && result[key] != null && typeof (result[key]) === "object" && Object.keys(result[key]).length != 0) {
             result[key] = findInObject(result[key], str);
             if (Object.keys(result[key]).length === 0 && obj.constructor === Object) {
                 delete result[key];
             }
         }
-        else{
+        else {
             delete result[key];
         }
     });
