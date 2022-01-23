@@ -18,8 +18,10 @@ html, body{
     display: block;
     height: 100%;
     width: 300px;
+    background: #d3c1c1;
 }
-header{
+
+.header{
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -27,6 +29,38 @@ header{
     padding: 10px 30px;
     height: 70px;
     border-bottom: 1px solid rgba(0, 0, 0, .0625);
+}
+
+.switch{
+    display: flex;
+    align-items: center;
+    font-size: 1.3rem;
+}
+
+.switch__track{
+    background: #72777a;
+    display: block;
+    height: 1.3rem;
+    width: 2.5rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    margin: 0 .2rem;
+}
+
+.switch__track::before{
+    content: "";
+    background: #d8d8d8;
+    transition: all 0.2s linear;
+    display: block;
+    width: 1.3rem;
+    height: 1.3rem;
+    border-radius: 1rem;
+    position: relative;
+    left: 0;
+}
+
+.dark::before{
+    left: 1.2rem;
 }
 
 main{
@@ -38,7 +72,7 @@ main{
 
 .content{
     height: calc(100% - 70px);
-    background:#ffffff;
+    background:#f5f5f5;
     padding: 30px;
     width: 100%;
     overflow-y: auto;
@@ -61,7 +95,7 @@ main{
 .content::-webkit-scrollbar-thumb{
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
     border-radius: 10px;
-    background: #000000;
+    background: #3b3b3b;
 }
 
 .logo{
@@ -106,13 +140,14 @@ main{
     color: #3b3b3b;
 }
 
-.header .fa-bars{
+
+.fas{
     color: #72777a;
     font-size: 22px;
     cursor: pointer;
 }
 
-.header .fa-bars:hover{
+.fas:hover{
     color: #3b3b3b;
 }
 
@@ -158,19 +193,6 @@ tbody tr:nth-child(even){
         position: relative;
     }
 
-    /* th{
-        display:  none;
-    }
-
-    tr{
-        display: flex;
-        flex-wrap: wrap;
-        margin-bottom: 5px;
-    }
-
-    td{
-        width: 50%;
-    } */
     /* black mode */
 }
 

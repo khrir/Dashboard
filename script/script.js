@@ -1,5 +1,5 @@
-const url_categoria_economica = '../database/Despesas_CE.csv';
-const url_f_completo = '../database/despesas_PF.csv';
+const url_categoria_economica = 'https://raw.githubusercontent.com/khrir/Dashboard/main/database/despesas_CE.csv';
+const url_f_completo = 'https://raw.githubusercontent.com/khrir/Dashboard/main/database/despesas_PF.csv';
 const url_m_completo = 'https://raw.githubusercontent.com/khrir/Dashboard/main/database/Repasses_M.csv'
 
 // Graph zone
@@ -7,7 +7,7 @@ const xlabel = [];
 const ylabel = [];
 
 async function chartIt(url) {
-    await getDataGraph(url);
+    await dataGraph(url);
     var canvas = '<canvas id="myChart"></canvas>';
     $('#content').html(canvas);
 
@@ -35,20 +35,51 @@ async function chartIt(url) {
     });
 }
 
-async function getDataGraph(url) {
+async function dataGraph(url) {
     let response = await fetch(url);
     let data = await response.text();
-    console.log(data)
-    let table = data.split('\n').slice(1);
-    table.forEach(row => {
-        let columns = row.split(',');
-        let custeio = columns[0];
-        let secretaria = columns[1];
-        xlabel.push(secretaria);
-        ylabel.push(parseFloat(custeio));
+    let temporario = [];
+    let temp = {};
+
+    let array = data.split('\n').slice(1);
+
+    array.forEach(row => {
+        let col = row.split(',');
+        temp = { Custeio: parseFloat(col[0]), Nome: col[1] }
+        temporario.push(temp);
     });
+
+    let result = temporario.map((obj) => findInObject(obj, 'SECRETARIA'));
+    let selected = result.map((obj, i) => Object.keys(obj).length ? temporario[i] : {}).filter((obj) => Object.keys(obj).length)
+    
+    for(let i = 0; i < selected.length; i++){
+        ylabel.push(selected[i].Custeio);
+        xlabel.push(selected[i].Nome);
+
+    }
 }
 
+
+function findInObject(obj, str) {
+    let result = JSON.parse(JSON.stringify(obj));
+    const re = new RegExp(str, "gi");
+
+    Object.keys(result).map(function (key,_) {
+        if(typeof (result[key]) === "string" && result[key].match(re)) {
+            result[key] = true;
+        } 
+        else if(result[key] != undefined && result[key] != null && typeof (result[key]) === "object" && Object.keys(result[key]).length != 0) {
+            result[key] = findInObject(result[key], str);
+            if (Object.keys(result[key]).length === 0 && obj.constructor === Object) {
+                delete result[key];
+            }
+        }
+        else{
+            delete result[key];
+        }
+    });
+    return result;
+}
 
 // Tables zone
 function plot_Table(url) {

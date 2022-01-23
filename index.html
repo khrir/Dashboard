@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="br">
+<html lang="br" data-theme="light">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,14 +20,21 @@
             <div class="menu">
                 <ul>
                     <li>
+                        <i class="fas fa-home"></i>
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li>
+                        <i class="fas fa-chart-bar"></i>
                         <a href="#" onclick="chartIt(url_categoria_economica)">Despesas
                             por categoria econômica</a>
                     </li>
                     <li>
+                        <i class="fas fa-users"></i>
                         <a href="#" onclick="dataTable(url_f_completo)">Despesas por
                             favorecido</a>
                     </li>
                     <li>
+                        <i class="fas fa-city"></i>
                         <a href="#" onclick="dataTable(url_m_completo)">Repasses por
                             município</a>
                     </li>
@@ -37,6 +44,12 @@
         <main id="main-content">
             <header class="header">
                 <i id="iconMenu" class="fas fa-bars" onclick="reconfigurar()"></i>
+
+                <div class="switch">
+                    <i class="fas fa-sun"></i>
+                    <span class="switch__track" id="switch__track"></span>
+                    <i class="fas fa-moon"></i>
+                </div>
             </header>
             <div class="content responsive-table" id="content">
 

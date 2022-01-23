@@ -17,5 +17,12 @@ function reconfigurar() {
         sidebar.style.display = 'none';
         main.style.width = '100%';
     }
-
 }
+
+// DARK MODE
+const switch_theme = document.getElementById('switch__track');
+
+switch_theme.addEventListener('click', () => {
+        switch_theme.classList.toggle('dark');
+
+});
