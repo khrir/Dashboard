@@ -8,13 +8,11 @@ const ylabel = [];
 
 async function chartIt(url) {
     await dataGraph(url);
+    let mod = [];
 
-    let temp = {}
-    let axis = [];
     let lab = [];
     for (let i = 1; i < 20; i++) {
-        temp = { Id: i, Nome: xlabel[i] };
-        axis.push(temp);
+        mod.push( i + " : " + xlabel[i]);
         lab.push(i);
     }
 
@@ -43,11 +41,31 @@ async function chartIt(url) {
                 }
             },
             plugins: {
-                legend: {
-                    display: true,
+                tooltip: {
+                    
+                    callbacks: {
+                        title: (item) => {
+                            return "ID: " + (item[0].parsed.x + 1);
+                        },
+                
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed.y !== null) {
+                                label += new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(context.parsed.y);
+                            }
+                            return label;
+                        },
 
+                        footer: () => {
+                            return mod;
+                        },
+                    }
                 }
             },
+            
         }
     });
 }
