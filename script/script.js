@@ -147,8 +147,9 @@ async function dataTable(url) {
     });
 
     temporario.sort((a, b) => {
-        return a.Valor < b.Valor;
+        return a.Valor < b.Valor ? 1 : a.Valor > b.Valor ? -1 : 0;
     });
+    console.log(temporario);
 
     tabela_url = temporario.slice(0, 10);
     plot_Table(tabela_url);
