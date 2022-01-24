@@ -107,14 +107,25 @@ function findInObject(obj, str) {
 function plot_Table(url) {
     let table = $('<table class="table">');
     let header = "<tr>";
-    for (let k in url[0]) header += "<th>" + k + "</th>";
-    header += "</tr>";
 
+    for (let k in url[0])header += "<th>" + k + "</th>";
+    header += "</tr>";
+    
     $(header).appendTo(table);
+
     $.each(url, function (_, value) {
         let row = "<tr>";
-        $.each(value, function (_, val) {
-            row += "<td>" + val + "</td>";
+        $.each(value, function (key, val) {
+            if(key === 'Cod'){
+                row += '<td data-title="' + key + '">' + val + "</td>";
+            }
+            else if(key === 'Valor'){
+                row += '<td data-title="' + key + '">' + val + "</td>";
+            }
+            else{
+                row += '<td data-title="' + key + '">' + val + "</td>";
+            }
+            
         });
         row += "</tr>";
         $(table).append(row);
