@@ -11,9 +11,9 @@ async function chartIt(url) {
     let mod = [];
 
     let lab = [];
-    for (let i = 1; i < 20; i++) {
-        mod.push( i + " : " + xlabel[i]);
-        lab.push(i);
+    for (let i = 0; i < 19; i++) {
+        mod.push( (i+1) + " : " + xlabel[i]);
+        lab.push(i+1);
     }
 
     let canvas = '<canvas id="myChart"></canvas>';
@@ -54,7 +54,7 @@ async function chartIt(url) {
                                 label += ': ';
                             }
                             if (context.parsed.y !== null) {
-                                label += new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(context.parsed.y);
+                                label += formatter.format(context.parsed.y);
                             }
                             return label;
                         },
@@ -134,11 +134,12 @@ function plot_Table(url) {
     $.each(url, function (_, value) {
         let row = "<tr>";
         $.each(value, function (key, val) {
+            
             if(key === 'Cod'){
                 row += '<td data-title="' + key + '">' + val + "</td>";
             }
             else if(key === 'Valor'){
-                row += '<td data-title="' + key + '">' + val + "</td>";
+                row += '<td data-title="' + key + '">' + formatter.format(val) + "</td>";
             }
             else{
                 row += '<td data-title="' + key + '">' + val + "</td>";
@@ -150,6 +151,12 @@ function plot_Table(url) {
     });
     $('#content').html(table)
 }
+
+const formatter = new Intl.NumberFormat('pt-BR',{
+    style: 'currency',
+    currency: 'BRL',
+    minimumFractionDigits: 2,
+});
 
 async function dataTable(url) {
     let response = await fetch(url);
