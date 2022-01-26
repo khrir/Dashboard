@@ -11,7 +11,7 @@ async function chartIt(url) {
     let mod = [];
 
     let lab = [];
-    for (let i = 0; i < 19; i++) {
+    for (let i = 0; i < 4; i++) {
         mod.push( (i+1) + " : " + xlabel[i]);
         lab.push(i+1);
     }
@@ -91,13 +91,25 @@ async function dataGraph(url) {
         temporario.push(temp);
     });
 
-    let result = temporario.map((obj) => findInObject(obj, 'SEC'));
-    let selected = result.map((obj, i) => Object.keys(obj).length ? temporario[i] : {}).filter((obj) => Object.keys(obj).length)
+    let r_edu = temporario.map((obj) => findInObject(obj, 'EDUCAÇÃO'));
+    let r_com = temporario.map((obj) => findInObject(obj, 'ESTADO DA COMUNICAÇÃO'));
+    let r_sau = temporario.map((obj) => findInObject(obj, 'ESTADO DA SAÚDE'));
+    let r_seg = temporario.map((obj) => findInObject(obj, 'ESTADO DA SEGURANÇA'));
+    
+    let s_edu = r_edu.map((obj, i) => Object.keys(obj).length ? temporario[i] : {}).filter((obj) => Object.keys(obj).length);
+    let s_com = r_com.map((obj, i) => Object.keys(obj).length ? temporario[i] : {}).filter((obj) => Object.keys(obj).length);
+    let s_sau = r_sau.map((obj, i) => Object.keys(obj).length ? temporario[i] : {}).filter((obj) => Object.keys(obj).length);
+    let s_seg = r_seg.map((obj, i) => Object.keys(obj).length ? temporario[i] : {}).filter((obj) => Object.keys(obj).length);
 
-    for (let i = 0; i < selected.length; i++) {
-        ylabel.push(selected[i].Custeio);
-        xlabel.push(selected[i].Nome);
-    }
+
+    ylabel.push(s_edu[0].Custeio);
+    xlabel.push(s_edu[0].Nome);
+    ylabel.push(s_com[0].Custeio);
+    xlabel.push(s_com[0].Nome);
+    ylabel.push(s_sau[0].Custeio);
+    xlabel.push(s_sau[0].Nome);
+    ylabel.push(s_seg[0].Custeio);
+    xlabel.push(s_seg[0].Nome);
 }
 
 function findInObject(obj, str) {
